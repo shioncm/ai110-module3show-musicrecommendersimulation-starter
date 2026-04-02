@@ -23,9 +23,32 @@ Some prompts to answer:
 
 - What features does each `Song` use in your system
   - For example: genre, mood, energy, tempo
+
+This sytem makes recommendations primarily with content-based filtering, using song attributes. The features used are as follows, ordered by weight:
+1. `genre`: Most intuitive user preference. Seven distinct values across ten songs, strong differentiator.
+2. `mood`: Context indicator, six distinct values across 10 songs. 
+3. `energy`: Wide range (0.28 - 0.93), cleanly separates calm songs from intense ones.
+4. `acousticness`: Wide range (0.05 - 0.92), cleanly separates acoustic songs from those that are not.
+5. `tempo_bpm`: Adds nuance to `energy`. Good secondary signal.
+6. `valence`: Correlated with `mood`. Separates emotionally positive from darker-toned songs. Good secondary signal.
+
 - What information does your `UserProfile` store
 - How does your `Recommender` compute a score for each song
+
+A simple weighted score will be computed as follows:
+
+`score = 0.35 * genre_match + 0.30 * mood_match + 0.20 * energy_similarity + 0.15 * acoustic_match`
+
+where:
+
+`genre_match: 1.0 if match, 0.0 if not`  
+`mood_match: 1.0 if match, 0.0 if not`  
+`energy_similarity: 1 - abs(user_energy - song_energy)`  
+`acoustic_match: based on likes_acoustic vs acousticness`   
+
 - How do you choose which songs to recommend
+
+Songs to recommend are chosen based on the weighted score calculated for the song. For each song, the score will be calculated. These scored songs will then be ranked against each other.
 
 You can include a simple diagram or bullet list if helpful.
 
