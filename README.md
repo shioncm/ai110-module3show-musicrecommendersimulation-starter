@@ -17,9 +17,9 @@ Replace this paragraph with your own summary of what your version does.
 
 ## How The System Works
 
-Explain your design in plain language.
+- How do real-world recommendations work?
 
-Some prompts to answer:
+Real-world music recommendation platforms use a hybrid model. For new users, content-based filtering is used. As data accumulates, the model shifts toward collaborative filtering for discovery. For established users, a blended apporach of both collaborative and content-based filtering is used.
 
 - What features does each `Song` use in your system
   - For example: genre, mood, energy, tempo
@@ -33,6 +33,13 @@ This sytem makes recommendations primarily with content-based filtering, using s
 6. `valence`: Correlated with `mood`. Separates emotionally positive from darker-toned songs. Good secondary signal.
 
 - What information does your `UserProfile` store
+
+The `UserProfile` stores the following:
+1. favorite_genre: string value for the user's preferred genre
+2. favorite_mood: string value for the user's preferred mood
+3. target_energy_level: float value (0-1) for the user's desired energy level
+4. likes_acousitc: boolean value for whether the user preferes acoustic over produced
+
 - How does your `Recommender` compute a score for each song
 
 A simple weighted score will be computed as follows:
@@ -49,8 +56,6 @@ where:
 - How do you choose which songs to recommend
 
 Songs to recommend are chosen based on the weighted score calculated for the song. For each song, the score will be calculated. These scored songs will then be ranked against each other.
-
-You can include a simple diagram or bullet list if helpful.
 
 ---
 
